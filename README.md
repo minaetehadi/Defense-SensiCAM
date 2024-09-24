@@ -16,7 +16,7 @@ Enhancing Adversarial Robustness in Object Classification using Edge Information
 1. Clone the repository:
     ```bash
     git clone https://github.com/minaetehadi/Defense-SensiCAM.git
-    cd Adversarial_Defense_Model
+    cd Defense-SensiCAM
     ```
 
     
