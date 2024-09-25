@@ -1,4 +1,4 @@
-# This module is adapted from https://github.com/Aiqz/Edge-Enhancement/blob/main/ImageNet/fgsm_imagenet/main_fast.py
+# This module is adapted from https://github.com/mahyarnajibi/FreeAdversarialTraining/blob/master/main_free.py
 #Adversarial Training- imagenet
 
 import init_paths
