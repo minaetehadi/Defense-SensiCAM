@@ -11,7 +11,10 @@ Enhancing Adversarial Robustness in Object Classification using Edge Information
 - **model_train.py**: Main script for training the student model, including adversarial attack handling.
 - **pgd_attack.py**: Code for generating adversarial examples using PGD attack.
 - **utils.py**: Utility functions for edge detection, image preprocessing, etc.
-
+## Dataset
+Download the dataset.
+- [CIFAR-10](http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz)
+- [ImageNet](https://image-net.org/download)
  ## Installation
 1. Clone the repository:
     ```bash
