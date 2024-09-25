@@ -1,5 +1,5 @@
 # This module is adapted from https://github.com/mahyarnajibi/FreeAdversarialTraining/blob/master/main_free.py
-#Adversarial Training- imagenet
+# Adversarial Training- Imagenet
 
 import init_paths
 import argparse
