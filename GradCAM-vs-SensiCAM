@@ -11,7 +11,6 @@ from mpl_toolkits.mplot3d import Axes3D
 from tensorflow.keras.applications.vgg19 import VGG19, preprocess_input, decode_predictions
 
 
-# Load and preprocess the image
 def load_image(img_path, target_size=(224, 224)):
     img = image.load_img(img_path, target_size=target_size)
     img_array = image.img_to_array(img)
@@ -19,7 +18,6 @@ def load_image(img_path, target_size=(224, 224)):
     img_array = preprocess_input(img_array)
     return img_array
 
-# Display image
 def display_image(img_path):
     img = cv2.imread(img_path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -31,7 +29,6 @@ img_path = '/content/image.png'
 img_array = load_image(img_path)
 display_image(img_path)
 
-# Load VGG16 model
 model = VGG19(weights='imagenet')
 
 # Set the class index to 162 and get the class name
@@ -61,7 +58,6 @@ heatmap = np.mean(conv_output, axis=-1)
 heatmap = np.maximum(heatmap, 0)
 heatmap /= np.max(heatmap)
 
-# Function to compute Sensi-CAM heatmap
 def sensi_cam_heatmap(model, img_array, class_idx):
     with tf.GradientTape() as tape:
         conv_output, predictions = heatmap_model(img_array)
@@ -76,7 +72,6 @@ def sensi_cam_heatmap(model, img_array, class_idx):
 
 sensi_heatmap = sensi_cam_heatmap(model, img_array, class_idx)
 
-# Function to overlay heatmap on image
 def overlay_heatmap(img_path, heatmap, title, alpha=0.4, colormap=cv2.COLORMAP_JET):
     img = cv2.imread(img_path)
     heatmap = cv2.resize(heatmap, (img.shape[1], img.shape[0]))
@@ -88,7 +83,7 @@ def overlay_heatmap(img_path, heatmap, title, alpha=0.4, colormap=cv2.COLORMAP_J
     plt.axis('off')
     plt.show()
 
-# Function to display 3D histogram of heatmap
+
 def plot_3d_histogram(heatmap, title):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
@@ -99,7 +94,6 @@ def plot_3d_histogram(heatmap, title):
     plt.title(title)
     plt.show()
 
-# Display heatmaps without overlay
 print("Grad-CAM Heatmap")
 plt.imshow(heatmap, cmap='viridis')
 plt.title(f'Grad-CAM: {class_label} (class {class_idx})')
@@ -112,10 +106,8 @@ plt.title(f'Sensi-CAM: {class_label} (class {class_idx})')
 plt.axis('off')
 plt.show()
 
-# Display heatmaps with overlay
 overlay_heatmap(img_path, heatmap, f'Grad-CAM: {class_label} (class {class_idx})')
 overlay_heatmap(img_path, sensi_heatmap, f'Sensi-CAM: {class_label} (class {class_idx})')
 
-# Display 3D histograms of heatmaps
 plot_3d_histogram(heatmap, f'Grad-CAM 3D Histogram: {class_label} (class {class_idx})')
 plot_3d_histogram(sensi_heatmap, f'Sensi-CAM 3D Histogram: {class_label} (class {class_idx})')
