@@ -31,23 +31,17 @@ def validate(model, teacher_model, validation_loader, epsilon=0.03, num_steps=40
             outputs_adv = model(adv_images)
             _, predicted_adv = torch.max(outputs_adv.data, 1)
 
-
             correct_adv += (predicted_adv == labels).sum().item()
 
             detected_adv += (predicted_adv != labels).sum().item()
 
-
-
     accuracy = 100 * (true_positive + true_negative) / (true_positive + true_negative + false_positive + false_negative)
-
     dsr = 100 * correct_adv / total_examples
-
     dr = 100 * detected_adv / total_examples
 
     print(f'Defense Success Rate (DSR): {dsr:.2f}%')
     print(f'Detection Rate (DR): {dr:.2f}%')
     print(f'Average Perturbation Size: {avg_perturbation:.4f}')
-
 
     transform = transforms.Compose([
         transforms.ToTensor(),
