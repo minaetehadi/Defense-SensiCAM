@@ -3,6 +3,7 @@ Enhancing Adversarial Robustness in Object Classification using Edge Information
 ## Requirements
 - Python >= 3.x
 - Tensorflow => 1.12.0
+- Pytorch >= 1.8
 - Numpy >= 1.15.4
 - Opencv >= 3.4.2
 ## Structure
