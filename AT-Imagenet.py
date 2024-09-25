@@ -1,7 +1,7 @@
-# This module is adapted from https://github.com/mahyarnajibi/FreeAdversarialTraining/blob/master/main_free.py
-#https://github.com/Aiqz/Edge-Enhancement/blob/main/ImageNet/fgsm_imagenet/main_fast.py
+# This module is adapted from https://github.com/Aiqz/Edge-Enhancement/blob/main/ImageNet/fgsm_imagenet/main_fast.py
+#Adversarial Training- imagenet
 
-# import init_paths
+import init_paths
 import argparse
 import os
 import time
