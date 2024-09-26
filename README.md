@@ -23,7 +23,7 @@ Download the pretrained models for imagenet and Cifar10.
 - [Imagenet](https://github.com/MadryLab/robustness/tree/master/robustness/imagenet_models)
 
 ## Attacks
-- [FoolBox] (https://github.com/bethgelab/foolbox)
+- [FoolBox](https://github.com/bethgelab/foolbox)
  ## Installation
 1. Clone the repository:
     ```bash
