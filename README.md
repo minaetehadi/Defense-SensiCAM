@@ -11,10 +11,10 @@ Enhancing Adversarial Robustness in Object Classification using Edge Information
 - `Boundingbox-Generation.py`: Generates bounding boxes based on the regions highlighted by Sensi-CAM.
 - `Discrepency-Sample.py`: Calculates the discrepancy between Sensi-CAM heatmaps of clean and adversarial examples.
 - `GradCAM-vs-SensiCAM.py`: Compares Grad-CAM and Sensi-CAM to demonstrate the superiority of Sensi-CAM in highlighting critical image regions.
-- `model.py`: Contains the definition of the models used in this project (e.g., AlexNet, VGG19), modified to handle edge inputs.
-- `train.py`: Implements the training loop with the combined OSPA loss function and PGD adversarial attacks.
+- `model.py`:  AlexNet, VGG19
+- `train.py`: Implements the training.
 - `validation.py`: Script to validate the model, test adversarial robustness, and visualize Sensi-CAM heatmaps.
-- `README.md`: This file, explaining the repository structure and usage.
+- `README.md`: Explaining the repository structure and usage.
 ## Dataset
 Download the dataset.
 - [CIFAR-10](http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz)
