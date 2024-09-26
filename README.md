@@ -30,5 +30,9 @@ Download the pretrained models for imagenet and Cifar10.
     git clone https://github.com/minaetehadi/Defense-SensiCAM.git
     cd Defense-SensiCAM
     ```
+2. Install the required Python packages:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
     
