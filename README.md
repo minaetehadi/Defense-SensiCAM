@@ -19,8 +19,8 @@ Download the dataset.
 
 ## Pretrained models
 Download the pretrained models for imagenet and Cifar10.
-- [MadryLab](https://github.com/MadryLab/cifar10_challenge/tree/master)
-- [Trusted-AI](https://github.com/Trusted-AI/adversarial-robustness-toolbox)
+- [Cifar10](https://github.com/MadryLab/cifar10_challenge/tree/master)
+- [Imagenet](https://github.com/MadryLab/robustness/tree/master/robustness/imagenet_models)
  ## Installation
 1. Clone the repository:
     ```bash
