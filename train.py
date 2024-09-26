@@ -8,7 +8,6 @@ from torch.utils.data import DataLoader, TensorDataset
 import cv2
 import numpy as np
 
-# Define AlexNet and VGG19 Models
 class AlexNetModel(nn.Module):
     def __init__(self, num_classes=10):
         super(AlexNetModel, self).__init__()
@@ -27,7 +26,6 @@ class VGG19Model(nn.Module):
     def forward(self, x):
         return self.model(x)
 
-# PGD Attack for Adversarial Example Generation
 class LinfPGDAttack:
     def __init__(self, model, epsilon=0.03, num_steps=40, step_size=0.01, random_start=True):
         self.model = model
@@ -56,7 +54,6 @@ class LinfPGDAttack:
 
         return adv_images.detach()
 
-# Sensi-CAM Heatmap Generation for Important Region Identification
 def sensi_cam(feature_map, class_score):
     sensi_cam = torch.autograd.grad(outputs=class_score, inputs=feature_map,
                                     grad_outputs=torch.ones(class_score.size()).cuda(),
@@ -65,7 +62,6 @@ def sensi_cam(feature_map, class_score):
     heatmap = torch.relu(torch.sum(weighted_avg, dim=1)).unsqueeze(1)
     return heatmap
 
-# Extract Bounding Boxes and Crop the Image Using Sensi-CAM
 def extract_bounding_boxes_and_crop(image, heatmap, threshold=0.5):
     heatmap_np = heatmap.detach().cpu().numpy()
     bbox = np.where(heatmap_np > threshold * heatmap_np.max())
@@ -81,14 +77,12 @@ def extract_bounding_boxes_and_crop(image, heatmap, threshold=0.5):
     
     return cropped_image
 
-# Denoising (using Gaussian blur)
 def denoise_image(image):
     image_np = image.cpu().numpy().transpose(1, 2, 0)
     denoised_image_np = cv2.GaussianBlur(image_np, (5, 5), 0)
     denoised_image = torch.tensor(denoised_image_np.transpose(2, 0, 1)).float()
     return denoised_image.cuda()
 
-# Extract Sobel and Canny Edges and Superimpose on the Original Image
 def extract_edges(image):
     image_np = image.cpu().numpy().transpose(1, 2, 0)
     gray_image = cv2.cvtColor(image_np, cv2.COLOR_RGB2GRAY)
@@ -105,7 +99,6 @@ def extract_edges(image):
     superimposed_image_tensor = torch.tensor(superimposed_image.transpose(2, 0, 1)).float() / 255.0
     return superimposed_image_tensor.cuda()
 
-# Combine RGB and Edge Information for Clean, Adversarial, and Cropped (Augmented) Images
 def combine_rgb_edges(image, denoise=True):
     if denoise:
         image = denoise_image(image)
@@ -151,7 +144,6 @@ def ospa_loss(benign_pred, adversarial_pred, teacher_pred, sigma=0.5, c=1.0):
         dist_clamped = torch.min(dist, torch.tensor(c).cuda())
         return dist_clamped
 
-    # Extract centers and pixel counts for benign, adversarial, and teacher heatmaps
     x_benign, y_benign, pixels_benign = get_center_of_mass_and_pixels(benign_pred)
     x_adv, y_adv, pixels_adv = get_center_of_mass_and_pixels(adversarial_pred)
     x_teacher, y_teacher, pixels_teacher = get_center_of_mass_and_pixels(teacher_pred)
@@ -165,11 +157,9 @@ def ospa_loss(benign_pred, adversarial_pred, teacher_pred, sigma=0.5, c=1.0):
     dist_y_adv = ospa_distance(y_adv, y_teacher)
     dist_pixels_adv = ospa_distance(pixels_adv, pixels_teacher)
 
-    # Combine the distances for benign and adversarial heatmaps
     ospa_benign = (dist_x_benign + dist_y_benign + dist_pixels_benign) / 3
     ospa_adv = (dist_x_adv + dist_y_adv + dist_pixels_adv) / 3
 
-    # Calculate the discrepancy loss based on the OSPA distances
     discrepancy_loss = torch.exp(-((ospa_benign ** 2 + ospa_adv ** 2) / (2 * sigma ** 2)))
 
     return discrepancy_loss.mean()
@@ -180,16 +170,12 @@ def combined_loss(output_benign, output_adv, target, benign_heatmap, adv_heatmap
     Combines the cross-entropy loss with the OSPA discrepancy loss for model training.
     """
 
-    # Cross-Entropy loss for benign images
     ce_loss_benign = F.cross_entropy(output_benign, target)
-
-    # Cross-Entropy loss for adversarial images
+    
     ce_loss_adv = F.cross_entropy(output_adv, target)
 
-    # OSPA discrepancy loss between the student model's heatmaps (benign and adversarial) and the teacher model's heatmap
     ospa_discrepancy = ospa_loss(benign_heatmap, adv_heatmap, teacher_heatmap)
 
-    # Combine the Cross-Entropy loss and OSPA discrepancy loss
     total_loss = ce_loss_benign + ce_loss_adv + lambda_ospa * ospa_discrepancy
 
     return total_loss
