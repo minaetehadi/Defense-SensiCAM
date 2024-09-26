@@ -7,11 +7,14 @@ Enhancing Adversarial Robustness in Object Classification using Edge Information
 - Numpy >= 1.15.4
 - Opencv >= 3.4.2
 ## Structure
-- **sensicam.py**: Code to generate SensiCAM heatmaps from teacher (pre-trained model) and student models.
-- **ospa_loss.py**: OSPA metric-based discrepancy loss function.
-- **model_train.py**: Main script for training the student model, including adversarial attack handling.
-- **pgd_attack.py**: Code for generating adversarial examples using PGD attack.
-- **utils.py**: Utility functions for edge detection, image preprocessing, etc.
+- `AT-Imagenet.py`: Implements adversarial training for the ImageNet dataset.
+- `Boundingbox-Generation.py`: Generates bounding boxes based on the regions highlighted by Sensi-CAM.
+- `Discrepency-Sample.py`: Calculates the discrepancy between Sensi-CAM heatmaps of clean and adversarial examples.
+- `GradCAM-vs-SensiCAM.py`: Compares Grad-CAM and Sensi-CAM to demonstrate the superiority of Sensi-CAM in highlighting critical image regions.
+- `model.py`: Contains the definition of the models used in this project (e.g., AlexNet, VGG19), modified to handle edge inputs.
+- `train.py`: Implements the training loop with the combined OSPA loss function and PGD adversarial attacks.
+- `validation.py`: Script to validate the model, test adversarial robustness, and visualize Sensi-CAM heatmaps.
+- `README.md`: This file, explaining the repository structure and usage.
 ## Dataset
 Download the dataset.
 - [CIFAR-10](http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz)
